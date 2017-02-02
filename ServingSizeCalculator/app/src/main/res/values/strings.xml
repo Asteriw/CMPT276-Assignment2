@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ServingSizeCalculator</string>
+    <string name="app_name">Ultimate Serving Size Calculator</string>
+    <string name="menu_title">Please select a pot to use:</string>
+    <string name="btn_add_pot">Add Pot</string>
 </resources>
