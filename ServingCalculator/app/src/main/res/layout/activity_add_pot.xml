@@ -10,4 +10,62 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.sfu.epsilon.servingcalculator.AddPot">
 
+    <Button
+        android:text="@string/btn_exit_addpot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_end_addpot"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="@string/Pot_Weight_Descrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Pot_Weight_Descrip"
+        android:textSize="18sp"
+        android:layout_alignBaseline="@+id/Pot_Weight_Field"
+        android:layout_alignBottom="@+id/Pot_Weight_Field"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#333" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/Pot_Weight_Field"
+        android:hint="@string/Pot_Weight_Hint"
+        android:layout_marginTop="96dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/Pot_Weight_Descrip"
+        android:layout_toEndOf="@+id/Pot_Weight_Descrip" />
+
+    <TextView
+        android:text="@string/Pot_Name_Descrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Pot_Name_Descrip"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="39dp"
+        android:textColor="#333" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/Pot_Name_Field"
+        android:hint="@string/Pot_Name_Hint"
+        android:layout_alignBaseline="@+id/Pot_Name_Descrip"
+        android:layout_alignBottom="@+id/Pot_Name_Descrip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/Pot_Name_Descrip"
+        android:layout_toEndOf="@+id/Pot_Name_Descrip" />
 </RelativeLayout>
