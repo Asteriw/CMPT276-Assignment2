@@ -1,10 +1,10 @@
-package your.package.here;
+package ca.sfu.epsilon.servingcalculator;
 
 /**
  * Store information about a single pot
  */
 
-public class Pot {
+public class Pot{
 
     // Set member data based on parameters.
     public Pot(String name, int weightInG) {
@@ -14,7 +14,8 @@ public class Pot {
 
     // Return the weight
     public int getWeightInG() {
-        return this.weight;
+        //return this.weight;
+
     }
 
     // Set the weight. Throws IllegalArgumentException if weight is less than 0.
@@ -23,7 +24,8 @@ public class Pot {
 
     // Return the name.
     public String getName() {
-        return this.name;
+
+        //return this.name;
     }
 
     // Set the name. Throws IllegalArgumentException if name is an empty string (length 0),
