@@ -1,4 +1,4 @@
-package your.package.here;
+package ca.sfu.epsilon.servingcalculator;
 
 import java.util.ArrayList;
 import java.util.List;

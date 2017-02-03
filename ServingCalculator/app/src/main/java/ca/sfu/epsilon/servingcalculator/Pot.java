@@ -9,13 +9,12 @@ public class Pot{
     // Set member data based on parameters.
     public Pot(String name, int weightInG) {
 
-    return;
     }
 
     // Return the weight
     public int getWeightInG() {
         //return this.weight;
-
+    return this.getWeightInG();
     }
 
     // Set the weight. Throws IllegalArgumentException if weight is less than 0.
@@ -26,6 +25,7 @@ public class Pot{
     public String getName() {
 
         //return this.name;
+    return this.getName();
     }
 
     // Set the name. Throws IllegalArgumentException if name is an empty string (length 0),
