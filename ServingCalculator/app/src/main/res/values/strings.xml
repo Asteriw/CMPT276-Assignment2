@@ -2,4 +2,14 @@
     <string name="app_name">Ultimate Serving Size Calculator</string>
     <string name="choose_pot">Please select a pot to use:</string>
     <string name="btn_add_pot">Add Pot</string>
+    <string name="tv_pot">Pot:</string>
+    <string name="tv_weight_empty">Weight Empty (g):</string>
+    <string name="tv_na">N/A</string>
+    <string name="tv_weight_with_food_g">Weight with food (g):</string>
+    <string name="tv_enter_a_weight">Enter a Weight</string>
+    <string name="tv_weight_of_food">Weight of Food (g):</string>
+    <string name="tv_how_many_servings">How many servings?</string>
+    <string name="tv_weight_of_a_serving_g">Weight of a serving (g):</string>
+    <string name="tv_number_of_servings"># of Servings</string>
+    <string name="btn_back">Back</string>
 </resources>

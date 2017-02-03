@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_pot"
-        android:id="@+id/tv_choose_pot" />
+        android:id="@+id/tv_choose_pot"
+        android:textSize="18sp" />
 
     <Button
         android:text="@string/btn_add_pot"
@@ -24,4 +25,5 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/btn_add_pot" />
+
 </RelativeLayout>
