@@ -18,7 +18,7 @@ public class AddPot extends AppCompatActivity {
         setupEndActivityButton();
     }
 
-    private void setupEndActivityButton() {
+    private void setupEndActivityButton(){
         Button endAddPot = (Button) findViewById(R.id.btn_end_addpot);
         endAddPot.setOnClickListener(new View.OnClickListener() {
             @Override
