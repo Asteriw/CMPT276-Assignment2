@@ -10,4 +10,14 @@ public class CalculateServing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+    private int calculateWeightOfFood(int potWeight, int inputWeight){
+        return (inputWeight-potWeight);
+    }
+
+    private int calculateServing(int weightInG, int amountofServings){
+        int weightPerServing = (weightInG/amountofServings);
+        return (int) Math.floor(weightPerServing);
+    }
+
 }
