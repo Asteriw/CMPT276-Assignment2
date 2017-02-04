@@ -24,6 +24,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/btn_add_pot" />
+        android:id="@+id/btn_add_pot"
+        android:textSize="18sp" />
 
 </RelativeLayout>
