@@ -1,8 +1,10 @@
 package ca.sfu.epsilon.servingcalculator;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE_NEWPOT = 666;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupListView() {
         Pot[] arrayOfPots = {};
 
-        ArrayAdapter<Pot> adapter = new ArrayAdapter<Pot>(
+        ArrayAdapter<Pot> adapter = new ArrayAdapter<>(
                 this,                       //Context for activity
                 R.layout.adapter_layout,    //Layout to use
                 arrayOfPots);               //Pots to put in
@@ -50,10 +54,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent AddPotintent = AddPot.makeIntent(MainActivity.this);
-                startActivity(AddPotintent);
+                startActivityForResult(AddPotintent,  REQUEST_CODE_NEWPOT);
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case REQUEST_CODE_NEWPOT:
+                if (resultCode == Activity.RESULT_OK) {
+                    String PotName = data.getStringExtra("NewPotName");
+                    int PotWeight = data.getIntExtra("NewPotWeight", -1);
+                    Log.i("Serving Calculator", "New Pot's name is: " + PotName);
+                    Log.i("Serving Calculator", "New Pot's weight is: " + String.valueOf(PotWeight));
+                } else {
+                    Log.i("Serving Calculator", "Activity Cancelled");
+            }
+        }
+    }
+
     /*
     private void setupCalculatorLaunch() {
         Button startAddPot = (Button) findViewById(R.id.); //ADD A VARIABLE HERE
