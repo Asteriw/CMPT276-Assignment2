@@ -1,5 +1,6 @@
 package ca.sfu.epsilon.servingcalculator;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class AddPot extends AppCompatActivity {
         endAddPot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED);
                 finish();
             }
         });
@@ -59,7 +61,12 @@ public class AddPot extends AppCompatActivity {
             private void makePot(String name, int weight) {
                 if ((!name.matches("")) && weight > 0) {
                     Pot pot = new Pot(name, weight);
-                    Log.i("CalculateServing", "Created new pot with name " + name + " and weight " + weight);
+                    Log.i("Serving Calculator", "Created new pot with name " + name + " and weight " + weight);
+                    Intent PotReturn = new Intent();
+                    PotReturn.putExtra("NewPotName", name);
+                    PotReturn.putExtra("NewPotWeight", weight);
+                    setResult(Activity.RESULT_OK, PotReturn);
+                    finish();
                 } else {
                     throw new IllegalArgumentException("Error: Invalid Pot Parameters.");
                 }
