@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
 public class AddPot extends AppCompatActivity {
 
     int weight = -1;
@@ -35,7 +33,11 @@ public class AddPot extends AppCompatActivity {
 
     private void setupWeightEditText() {
         EditText weightinput = (EditText) findViewById(R.id.Pot_Weight_Field);
-        weight = Integer.parseInt(weightinput.getText().toString());
+        if ((weightinput.getText().toString()).equals("")){
+            weight = -1;
+        } else {
+            weight = Integer.parseInt(weightinput.getText().toString());
+        }
     }
 
     private void setupEndActivityButton(){
@@ -62,7 +64,7 @@ public class AddPot extends AppCompatActivity {
             }
 
             private void makePot(String name, int weight) {
-                if ((!name.matches("")) && weight > 0) {
+                if ((!name.matches("")) && weight > 0){
                     Pot pot = new Pot(name, weight);
                     Log.i("Serving Calculator", "Created new pot with name " + pot.getName() + " and weight " + pot.getWeightInG());
                     Intent PotReturn = new Intent();
