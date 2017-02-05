@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,6 +19,17 @@ public class MainActivity extends AppCompatActivity {
 
         setupAddPotLaunch();
         setupListView();
+        setupPotClick();
+    }
+
+    private void setupPotClick() {
+        ListView list = (ListView) findViewById(R.id.lv_pot_list);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+                TextView textView = (TextView) viewClicked;
+            }
+        });
     }
 
     private void setupListView() {
