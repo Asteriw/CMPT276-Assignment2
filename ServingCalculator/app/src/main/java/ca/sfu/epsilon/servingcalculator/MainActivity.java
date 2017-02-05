@@ -3,10 +3,10 @@ package ca.sfu.epsilon.servingcalculator;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +16,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setupAddPotLaunch();
+        setupListView();
+    }
+
+    private void setupListView() {
+        Pot[] arrayOfPots = {};
+
+        ArrayAdapter<Pot> adapter = new ArrayAdapter<Pot>(
+                this,                       //Context for activity
+                R.layout.adapter_layout,    //Layout to use
+                arrayOfPots);               //Pots to put in
+
+        ListView list = (ListView) findViewById(R.id.lv_pot_list);
+        list.setAdapter(adapter);
     }
 
     private void setupAddPotLaunch() {

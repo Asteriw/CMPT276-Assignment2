@@ -2,13 +2,13 @@ package ca.sfu.epsilon.servingcalculator;
 
 import java.util.ArrayList;
 import java.util.List;
+import ca.sfu.epsilon.servingcalculator.Pot;
 
 /**
  * Class to manage a collection of pots.
  */
 public class PotCollection {
     private List<Pot> pots = new ArrayList<>();
-
 
     public void addPot(Pot pot) {
         pots.add(pot);

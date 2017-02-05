@@ -27,4 +27,14 @@
         android:id="@+id/btn_add_pot"
         android:textSize="18sp" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_choose_pot"
+        android:layout_marginTop="11dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/btn_add_pot"
+        android:id="@+id/lv_pot_list" />
+
 </RelativeLayout>
