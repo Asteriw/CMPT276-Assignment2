@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import ca.sfu.epsilon.servingcalculator.Pot;
-
 public class AddPot extends AppCompatActivity {
 
     int weight;
@@ -27,17 +25,17 @@ public class AddPot extends AppCompatActivity {
     }
 
     private void setupNameEditText() {
-        EditText editText = (EditText) findViewById(R.id.Pot_Name_Field);
-        String name = editText.getText().toString();
+        EditText editTextName = (EditText) findViewById(R.id.Pot_Name_Field);
+        String name = editTextName.getText().toString();
     }
 
     private void setupWeightEditText() {
-        EditText editText = (EditText) findViewById(R.id.Pot_Weight_Field);
-        //int weight = Integer.valueOf(editText.getText().toString());
+        EditText editTextInt = (EditText) findViewById(R.id.Pot_Weight_Field);
+        //int weight = Integer.parseInt(editTextInt.getText().toString());
     }
 
     private void setupEndActivityButton(){
-        Button endAddPot = (Button) findViewById(R.id.btn_end_addpot);
+        Button endAddPot = (Button) findViewById(R.id.btn_end_add_pot);
         endAddPot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
