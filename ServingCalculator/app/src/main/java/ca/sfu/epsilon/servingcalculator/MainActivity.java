@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_NEWPOT = 666;
 
+    PotCollection potList = new PotCollection();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         switch(requestCode) {
             case REQUEST_CODE_NEWPOT:
                 if (resultCode == Activity.RESULT_OK) {
+
+                    Pot newPot = AddPot.getPotFromIntent(data);
+                    potList.addPot(newPot);
+                    
                     String PotName = data.getStringExtra("NewPotName");
                     int PotWeight = data.getIntExtra("NewPotWeight", -1);
                     Log.i("Serving Calculator", "New Pot's name is: " + PotName);

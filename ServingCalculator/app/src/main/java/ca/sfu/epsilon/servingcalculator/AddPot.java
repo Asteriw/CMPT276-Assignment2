@@ -80,6 +80,11 @@ public class AddPot extends AppCompatActivity {
         });
     }
 
+    public static Pot getPotFromIntent(Intent data) {
+        Pot pot = new Pot(data.getStringExtra("NewPotName"), data.getIntExtra("NewPotWeight", -1));
+        return pot;
+    }
+
     public static Intent makeIntent(Context context) {
         return new Intent(context, AddPot.class);
     }
