@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/choose_pot"
         android:id="@+id/tv_choose_pot"
-        android:textSize="18sp" />
+        android:textSize="24sp" />
 
     <Button
         android:text="@string/btn_add_pot"
