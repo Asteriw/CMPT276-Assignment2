@@ -15,6 +15,7 @@ public class PotTest {
     @Test
     public void setWeightInG() throws Exception {
         pot.setWeightInG(90);
+        assertNotEquals(66, pot.getWeightInG());
         assertEquals(90, pot.getWeightInG());
     }
 
@@ -26,6 +27,7 @@ public class PotTest {
     @Test
     public void setName() throws Exception {
         pot.setName("Fernando, Master of the Dark Arts");
+        assertNotEquals("Chicken", pot.getName());
         assertEquals("Fernando, Master of the Dark Arts", pot.getName());
     }
 
@@ -44,8 +46,13 @@ public class PotTest {
         pot.setName("");
     }
 
+    @Test (expected = NullPointerException.class)
+    public void testSetNameNULL() throws Exception {
+        pot.setName(null);
+    }
+
     @Test (expected = IllegalArgumentException.class)
-    public void testSetWeight() throws Exception{
+    public void testSetWeightZero() throws Exception{
         pot.setWeightInG(0);
     }
 
