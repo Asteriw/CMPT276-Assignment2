@@ -13,50 +13,25 @@ import android.widget.EditText;
 
 public class AddPot extends AppCompatActivity {
 
-    int weight;
-    String name;
+    int weight = -1;
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_pot);
-        setupNameEditText();
-        setupWeightEditText();
         setupEndActivityButton();
         setupAddPotButton();
     }
 
     private void setupNameEditText() {
-        final EditText editTextName = (EditText) findViewById(R.id.Pot_Weight_Field);
-        editTextName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String name = editTextName.getText().toString();
-            }
-        });
+        EditText nameinput = (EditText) findViewById(R.id.Pot_Name_Field);
+        name = nameinput.getText().toString();
     }
 
     private void setupWeightEditText() {
-        final EditText editTextInt = (EditText) findViewById(R.id.Pot_Weight_Field);
-        editTextInt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int weight = Integer.parseInt(editTextInt.getText().toString());
-
-            }
-        });
+        EditText weightinput = (EditText) findViewById(R.id.Pot_Weight_Field);
+        weight = Integer.parseInt(weightinput.getText().toString());
     }
 
     private void setupEndActivityButton(){
@@ -75,11 +50,14 @@ public class AddPot extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                setupNameEditText();
+                setupWeightEditText();
+
                 makePot(name, weight);
             }
 
             private void makePot(String name, int weight) {
-                if ((!name.equals(null)) && weight > 0) {
+                if ((!name.matches("")) && weight > 0) {
                     Pot pot = new Pot(name, weight);
                     Log.i("CalculateServing", "Created new pot with name " + name + " and weight " + weight);
                 } else {
