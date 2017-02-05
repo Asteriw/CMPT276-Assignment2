@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,13 +27,36 @@ public class AddPot extends AppCompatActivity {
     }
 
     private void setupNameEditText() {
-        EditText editTextName = (EditText) findViewById(R.id.Pot_Name_Field);
-        String name = editTextName.getText().toString();
+        final EditText editTextName = (EditText) findViewById(R.id.Pot_Weight_Field);
+        editTextName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String name = editTextName.getText().toString();
+            }
+        });
     }
 
     private void setupWeightEditText() {
-        EditText editTextInt = (EditText) findViewById(R.id.Pot_Weight_Field);
-        //int weight = Integer.parseInt(editTextInt.getText().toString());
+        final EditText editTextInt = (EditText) findViewById(R.id.Pot_Weight_Field);
+        editTextInt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                int weight = Integer.parseInt(editTextInt.getText().toString());
+
+            }
+        });
     }
 
     private void setupEndActivityButton(){
