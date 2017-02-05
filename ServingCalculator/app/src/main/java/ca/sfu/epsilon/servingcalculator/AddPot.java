@@ -61,7 +61,7 @@ public class AddPot extends AppCompatActivity {
             private void makePot(String name, int weight) {
                 if ((!name.matches("")) && weight > 0) {
                     Pot pot = new Pot(name, weight);
-                    Log.i("Serving Calculator", "Created new pot with name " + name + " and weight " + weight);
+                    Log.i("Serving Calculator", "Created new pot with name " + pot.getName() + " and weight " + pot.getWeightInG());
                     Intent PotReturn = new Intent();
                     PotReturn.putExtra("NewPotName", name);
                     PotReturn.putExtra("NewPotWeight", weight);
