@@ -13,7 +13,7 @@ import android.widget.EditText;
 public class CalculateServing extends AppCompatActivity {
 
     int weight;
-    int servings;
+    int servings = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
