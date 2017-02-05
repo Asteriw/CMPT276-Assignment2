@@ -11,13 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import ca.sfu.epsilon.servingcalculator.PotCollection;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_NEWPOT = 666;
 
     PotCollection potList = new PotCollection();
+
+    String[] arrayofpots = {};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setupAddPotLaunch();
         setupListView();
         setupPotClick();
-        populateListView();
-    }
-
-    private void populateListView() {
-        String[] Pots = {"Bigpot", "Smallpot", "SubhumanPot"};
-        ArrayAdapter<String> PotAdapter = new ArrayAdapter<>(this, R.layout.adapter_layout, Pots);
-        ListView PotList = (ListView) findViewById(R.id.lv_pot_list);
-        PotList.setAdapter(PotAdapter);
     }
 
     private void setupPotClick() {
@@ -48,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupListView() {
-        Pot[] arrayOfPots = {};
+        refresher(arrayofpots);
+    }
 
-        ArrayAdapter<Pot> adapter = new ArrayAdapter<>(
+    private void refresher(String[] array) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,                       //Context for activity
                 R.layout.adapter_layout,    //Layout to use
-                arrayOfPots);               //Pots to put in
+                array);               //Pots to put in
 
         ListView list = (ListView) findViewById(R.id.lv_pot_list);
         list.setAdapter(adapter);
@@ -79,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
                     Pot newPot = AddPot.getPotFromIntent(data);
                     potList.addPot(newPot);
+                    arrayofpots = potList.getPotDescriptions();
+                    refresher(arrayofpots);
                     
                     String PotName = data.getStringExtra("NewPotName");
                     int PotWeight = data.getIntExtra("NewPotWeight", -1);
