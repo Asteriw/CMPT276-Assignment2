@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import ca.sfu.epsilon.servingcalculator.PotCollection;
 
 public class MainActivity extends AppCompatActivity {
 

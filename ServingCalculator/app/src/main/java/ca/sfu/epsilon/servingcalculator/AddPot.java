@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 public class AddPot extends AppCompatActivity {
 
@@ -68,7 +71,8 @@ public class AddPot extends AppCompatActivity {
                     setResult(Activity.RESULT_OK, PotReturn);
                     finish();
                 } else {
-                    throw new IllegalArgumentException("Error: Invalid Pot Parameters.");
+                    Toast error = Toast.makeText(getApplicationContext(), getString(R.string.toast_error), Toast.LENGTH_LONG);
+                    error.show();
                 }
             }
         });
