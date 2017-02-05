@@ -25,6 +25,14 @@ public class MainActivity extends AppCompatActivity {
         setupAddPotLaunch();
         setupListView();
         setupPotClick();
+        populateListView();
+    }
+
+    private void populateListView() {
+        String[] Pots = {"Bigpot", "Smallpot", "SubhumanPot"};
+        ArrayAdapter<String> PotAdapter = new ArrayAdapter<>(this, R.layout.adapter_layout, Pots);
+        ListView PotList = (ListView) findViewById(R.id.lv_pot_list);
+        PotList.setAdapter(PotAdapter);
     }
 
     private void setupPotClick() {
