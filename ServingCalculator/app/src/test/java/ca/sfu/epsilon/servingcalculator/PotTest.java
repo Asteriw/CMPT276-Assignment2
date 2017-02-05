@@ -39,36 +39,18 @@ public class PotTest {
         assertNotEquals("33", pot.getWeightInG());
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void testSetName() throws Exception {
-        try{
-            pot.setName("");
-        }
-        catch(Exception IllegalArgumentException)
-        {
-            assertEquals("Chicken", pot.getName());
-        }
+        pot.setName("");
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void testSetWeight() throws Exception{
-        try{
-            pot.setWeightInG(0);
-        }
-        catch(Exception IllegalArgumentException)
-        {
-            assertEquals(66, pot.getWeightInG());
-        }
+        pot.setWeightInG(0);
     }
 
-    @Test
+    @Test (expected = IllegalArgumentException.class)
     public void testSetWeightNeg() throws Exception{
-        try{
-            pot.setWeightInG(-100);
-        }
-        catch(Exception IllegalArgumentException)
-        {
-            assertEquals(66, pot.getWeightInG());
-        }
+        pot.setWeightInG(-100);
     }
 }
