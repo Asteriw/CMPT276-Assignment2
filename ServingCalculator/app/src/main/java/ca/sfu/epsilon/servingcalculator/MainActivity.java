@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Serving Calculator", "First amount: " +String.valueOf(potList.countPots()));
         potList.deletePot(index);
         Log.i("Serving Calculator", "Second amount: " +String.valueOf(potList.countPots()));
+        arrayofpots = potList.getPotDescriptions();
         refresher(arrayofpots);
     }
 
@@ -73,12 +75,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId() == R.id.lv_pot_list) {
-            String[] PotMenuOptions = {"Edit", "Delete"};
-            for (int i = 0; i < PotMenuOptions.length; i++) {
-                menu.add(Menu.NONE, i, i, PotMenuOptions[i]);
-            }
-        }
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contextmenu, menu);
     }
 
     private void refresher(String[] array) {
