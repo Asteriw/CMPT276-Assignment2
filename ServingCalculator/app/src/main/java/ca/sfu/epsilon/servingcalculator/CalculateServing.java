@@ -18,7 +18,6 @@ import static android.widget.Toast.LENGTH_LONG;
 public class CalculateServing extends AppCompatActivity {
 
     Pot potToCalculate = new Pot("n", 0);
-    int potWeight;
     int weight;
     int weightDiffence;
     int servings = 1;
@@ -31,7 +30,7 @@ public class CalculateServing extends AppCompatActivity {
         extractDataFromIntent();
         setupWeightEditView();
         setupServingsEditView();
-        setupTextViews();
+        setupPotTextViews();
     }
 
     private void extractDataFromIntent() {
@@ -44,11 +43,16 @@ public class CalculateServing extends AppCompatActivity {
         potToCalculate.setWeightInG(weight);
     }
 
-    private void setupTextViews() {
+    private void setupPotTextViews() {
         TextView potName = (TextView) findViewById(R.id.tv_pot_name);
         potName.setText(potToCalculate.getName());
         TextView potWeight = (TextView) findViewById(R.id.tv_pot_weight);
         potWeight.setText("" + potToCalculate.getWeightInG());
+    }
+
+    private void updateTextView(final int buttonID, String value){
+        TextView textview = (TextView) findViewById(buttonID);
+        textview.setText(value);
     }
 
     private void setupWeightEditView(){
@@ -56,14 +60,17 @@ public class CalculateServing extends AppCompatActivity {
         inputWeight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
             @Override
             public void afterTextChanged(Editable s) {
-                weight = Integer.parseInt(inputWeight.getText().toString());
-                weightDiffence = calculateWeightOfFood(potWeight, weight);
+                if (inputWeight.getText().toString().equals("")){
+                    weight = 1;
+                } else {
+                    weight = Integer.parseInt(inputWeight.getText().toString());
+                }
+                weightDiffence = calculateWeightOfFood(potToCalculate.getWeightInG(), weight);
+                updateTextView(R.id.tv_weight_of_food, ""+weightDiffence);
             }
 
         });
@@ -74,20 +81,22 @@ public class CalculateServing extends AppCompatActivity {
         inputServings.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
             @Override
             public void afterTextChanged(Editable s) {
-                servings = Integer.parseInt(inputServings.getText().toString());
+                if (inputServings.getText().toString().equals("")){
+                    servings = 1;
+                } else{
+                    servings = Integer.parseInt(inputServings.getText().toString());
+                }
                 if (servings == 0){
                     servings = 1;
                     Toast errorServings = Toast.makeText(getApplicationContext(), getString(R.string.error_Servings), LENGTH_LONG);
                     errorServings.show();
                 }
                 int servingWeight = calculateServing(weightDiffence, servings);
-
+                updateTextView(R.id.tv_total_serving_weight, ""+servingWeight);
             }
         });
     }
