@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,12 +46,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deleteEntry(int index){
+        Log.i("Serving Calculator", "First amount: " +String.valueOf(potList.countPots()));
         potList.deletePot(index);
-        setupListView();
+        Log.i("Serving Calculator", "Second amount: " +String.valueOf(potList.countPots()));
+        refresher(arrayofpots);
     }
 
     private void setupListView() {
         refresher(arrayofpots);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.edit:
+                return true;
+            case R.id.delete:
+                Log.i("Serving Calculator", "We are deleting, possibly.");
+                deleteEntry(info.position);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -69,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 this,                       //Context for activity
                 R.layout.adapter_layout,    //Layout to use
                 array);               //Pots to put in
-
         ListView list = (ListView) findViewById(R.id.lv_pot_list);
         list.setAdapter(adapter);
         registerForContextMenu(list);
@@ -100,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     setupPotClick();
                     
                     String PotName = data.getStringExtra("NewPotName");
-                    int PotWeight = data.getIntExtra("NewPotWeight", -1);
+                    int PotWeight = data.getIntExtra("NewPotWeight", 1);
                     Log.i("Serving Calculator", "New Pot's name is: " + PotName);
                     Log.i("Serving Calculator", "New Pot's weight is: " + String.valueOf(PotWeight));
                 } else {

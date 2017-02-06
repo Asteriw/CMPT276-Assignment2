@@ -28,6 +28,7 @@ public class PotCollection {
     public int countPots() {
         return pots.size();
     }
+
     public Pot getPot(int index) {
         validateIndexWithException(index);
         return pots.get(index);
