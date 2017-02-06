@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void deleteEntry(int index){
+        potList.deletePot(index);
+        setupListView();
+    }
+
     private void setupListView() {
         refresher(arrayofpots);
     }

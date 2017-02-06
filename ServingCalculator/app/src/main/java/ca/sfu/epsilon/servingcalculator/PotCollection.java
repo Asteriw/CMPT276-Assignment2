@@ -20,6 +20,11 @@ public class PotCollection {
         pots.add(indexOfPotEditing, pot);
     }
 
+    public void deletePot(int indexToDelete){
+        validateIndexWithException(indexToDelete);
+        pots.remove(indexToDelete);
+    }
+
     public int countPots() {
         return pots.size();
     }
