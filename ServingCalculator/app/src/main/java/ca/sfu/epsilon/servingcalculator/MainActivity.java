@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_NEWPOT = 666;
+    public static final int REQUEST_CODE_CHANGEPOT = 111;
 
     PotCollection potList = new PotCollection();
 
@@ -46,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void editEntry(int index) {
+        Intent ChangePotintent = AddPot.makeIntent(MainActivity.this);
+        ChangePotintent.putExtra("Index", index);
+        startActivityForResult(ChangePotintent, REQUEST_CODE_CHANGEPOT);
+    }
+
     private void deleteEntry(int index){
         Log.i("Serving Calculator", "First amount: " +String.valueOf(potList.countPots()));
         potList.deletePot(index);
@@ -63,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()) {
             case R.id.edit:
+                editEntry(info.position);
                 return true;
             case R.id.delete:
                 Log.i("Serving Calculator", "We are deleting, possibly.");
@@ -117,8 +125,22 @@ public class MainActivity extends AppCompatActivity {
                     int PotWeight = data.getIntExtra("NewPotWeight", 1);
                     Log.i("Serving Calculator", "New Pot's name is: " + PotName);
                     Log.i("Serving Calculator", "New Pot's weight is: " + String.valueOf(PotWeight));
+                }
+                else {
+                    Log.i("Serving Calculator", "Add Pot Cancelled");
+                }
+                break;
+            case REQUEST_CODE_CHANGEPOT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Log.i("Serving Calculator", "We get here");
+                    Pot changePot = AddPot.getPotFromIntent(data);
+                    Log.i("Serving Calculator", "We get here as well");
+                    potList.changePot(changePot, data.getIntExtra("Index", 1));
+                    Log.i("Serving Calculator", "We get here too");
+                    arrayofpots = potList.getPotDescriptions();
+                    refresher(arrayofpots);
                 } else {
-                    Log.i("Serving Calculator", "Activity Cancelled");
+                    Log.i("Serving Calculator", "Edit Cancelled");
             }
         }
     }

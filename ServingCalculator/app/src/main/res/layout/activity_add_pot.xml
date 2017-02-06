@@ -45,7 +45,7 @@
         android:textColor="#333" />
 
     <Button
-        android:text="@string/btn_add_pot"
+        android:text="@string/Accept_Add_Pot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
