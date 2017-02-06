@@ -10,25 +10,30 @@ import ca.sfu.epsilon.servingcalculator.Pot;
 public class PotCollection {
     private List<Pot> pots = new ArrayList<>();
 
+    //Adding a pot to the Pot Collection
     public void addPot(Pot pot) {
         pots.add(pot);
     }
 
+    //Function that deletes and re-writes a pot at an index
     public void changePot(Pot pot, int indexOfPotEditing) {
         validateIndexWithException(indexOfPotEditing);
         pots.remove(indexOfPotEditing);
         pots.add(indexOfPotEditing, pot);
     }
 
+    //Deletes a pot at an index
     public void deletePot(int indexToDelete){
         validateIndexWithException(indexToDelete);
         pots.remove(indexToDelete);
     }
 
+    //Returns the amount of pots in a PotCollection
     public int countPots() {
         return pots.size();
     }
 
+    //Returns the pot at an index
     public Pot getPot(int index) {
         validateIndexWithException(index);
         return pots.get(index);
@@ -44,6 +49,7 @@ public class PotCollection {
         return descriptions;
     }
 
+    //Function that checks whether or not the index passed in is valid.
     private void validateIndexWithException(int index) {
         if (index < 0 || index >= countPots()) {
             throw new IllegalArgumentException();

@@ -27,10 +27,13 @@ public class MainActivity extends AppCompatActivity {
     private static final String SHAREDPREF_ITEM_POTLIST_WEIGHT = "PotWeight";
     private static final String SHAREDPREF_ITEM_POTLIST_SIZE = "PotListSize";
 
+    //Our PotList!
     PotCollection potList = new PotCollection();
 
+    //Our array of pots for our ListView.
     String[] arrayofpots = {};
 
+    //Functions to be called at launch.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setupPotClick();
     }
 
+    //Setting up the button to add a pot. This will start a new activity.
     private void setupAddPotLaunch() {
         Button startAddPot = (Button) findViewById(R.id.btn_add_pot);
         startAddPot.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Setting up the ability to click on pots in the listview.
     private void setupPotClick() {
         ListView list = (ListView) findViewById(R.id.lv_pot_list);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -64,12 +69,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Function that gets called when someone clicks on the "Edit" button in the context menu.
+    //If a pot is successfully edited, it will call changePot from PotCollection.java,
+    //otherwise, nothing happens.
     private void editEntry(int index) {
         Intent ChangePotintent = AddPot.makeIntent(MainActivity.this);
         ChangePotintent.putExtra("Index", index);
         startActivityForResult(ChangePotintent, REQUEST_CODE_CHANGEPOT);
     }
 
+    //Deletes an entry and reloads the ListView
     private void deleteEntry(int index){
         Log.i("Serving Calculator", "First amount: " +String.valueOf(potList.countPots()));
         potList.deletePot(index);
@@ -78,25 +87,26 @@ public class MainActivity extends AppCompatActivity {
         refresher(arrayofpots);
     }
 
+    //Setting up the listview. This should be called everytime a change is made to arrayofpots
     private void setupListView() {
         potList = loadPotList();
         arrayofpots = potList.getPotDescriptions();
         refresher(arrayofpots);
     }
 
+    //Function that treats the return values of the AddPot activity and responds accordingly.
+    //Will add a new pot if need be and will edit a pot if the user wanted to edit a pot.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
             case REQUEST_CODE_NEWPOT:
                 if (resultCode == Activity.RESULT_OK) {
-
                     Pot newPot = getPotFromIntent(data);
                     potList.addPot(newPot);
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
                     setupPotClick();
-
                     String PotName = data.getStringExtra("NewPotName");
                     int PotWeight = data.getIntExtra("NewPotWeight", 1);
                     Log.i("Serving Calculator", "New Pot's name is: " + PotName);
@@ -120,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Function that determines what item on the context menu someone clicks on and calls the appropriate functions.
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -134,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
+    //Function that creates a context menu when someone long-holds on the item in the Listview.
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -141,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.contextmenu, menu);
     }
 
+    //Refresher function that reloads potlist everytime it's edited. this is called after it's saved.
     private void refresher(String[] array) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,                       //Context for activity
@@ -152,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(list);
     }
 
+    //Function that loads the potlist. This only gets done once, at launch.
     private PotCollection loadPotList(){
         SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         int sizeOfPotList = preferences.getInt(SHAREDPREF_ITEM_POTLIST_SIZE, 0);
@@ -165,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         return potList;
     }
 
+    //Function that saves the potLIst into SharedPreferences. THis is done everytime the potlist is edited.
     private void storePotList(){
         String tempName;
         int tempWeight;

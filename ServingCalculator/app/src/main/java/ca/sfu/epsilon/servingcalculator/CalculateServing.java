@@ -22,6 +22,7 @@ public class CalculateServing extends AppCompatActivity {
     int weightDiffence;
     int servings = 1;
 
+    //Functions to instantiate at the launch of the activity.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class CalculateServing extends AppCompatActivity {
         setupPotTextViews();
     }
 
+    //Decoding the passed in intent, this will store the passed in values in potToCalculate
     private void extractDataFromIntent() {
         Intent intent = getIntent();
         String name = intent.getStringExtra("PotName");
@@ -43,6 +45,7 @@ public class CalculateServing extends AppCompatActivity {
         potToCalculate.setWeightInG(weight);
     }
 
+    //Putting in the values of name and weight in the textviews in the menu
     private void setupPotTextViews() {
         TextView potName = (TextView) findViewById(R.id.tv_pot_name);
         potName.setText(potToCalculate.getName());
@@ -50,11 +53,24 @@ public class CalculateServing extends AppCompatActivity {
         potWeight.setText("" + potToCalculate.getWeightInG());
     }
 
+    //Updating textviews with the computed values on the fly when people enter in numbers.
     private void updateTextView(final int buttonID, String value){
         TextView textview = (TextView) findViewById(buttonID);
         textview.setText(value);
     }
 
+    //Setting up the back button, exiting the activity.
+    private void setupEndActivityButton(){
+        Button endAddPot = (Button) findViewById(R.id.btn_back);
+        endAddPot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    //Function to setup the editText for weight. This function stores an int.
     private void setupWeightEditView(){
         final EditText inputWeight = (EditText) findViewById(R.id.edText_weight_with_food);
         inputWeight.addTextChangedListener(new TextWatcher() {
@@ -76,6 +92,7 @@ public class CalculateServing extends AppCompatActivity {
         });
     }
 
+    //Function to setup the editText for name. This function stores a string.
     private void setupServingsEditView(){
         final EditText inputServings = (EditText) findViewById(R.id.edText_servings_amount);
         inputServings.addTextChangedListener(new TextWatcher() {
@@ -101,29 +118,22 @@ public class CalculateServing extends AppCompatActivity {
         });
     }
 
+    //Calculates the weight of the food without the pot.
     private int calculateWeightOfFood(int potWeight, int inputWeight){
         return (inputWeight-potWeight);
     }
 
+    //Calculates the weight per serving, returns an int.
     private int calculateServing(int weightInG, int amountOfServings){
         int weightPerServing = (weightInG/amountOfServings);
         return (int) Math.floor(weightPerServing);
     }
 
+    //The makeIntent function. Call on this to start the activity
     public static Intent makeIntent(Context context, Pot pot) {
         Intent returnIntent = new Intent(context, CalculateServing.class);
         returnIntent.putExtra("PotName", pot.getName());
         returnIntent.putExtra("PotWeight", pot.getWeightInG());
         return returnIntent;
-    }
-
-    private void setupEndActivityButton(){
-        Button endAddPot = (Button) findViewById(R.id.btn_back);
-        endAddPot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 }
