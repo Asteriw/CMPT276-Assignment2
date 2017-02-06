@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setupAddPotLaunch();
         setupListView();
         setupPotClick();
-        loadPotList();
     }
 
     private void setupAddPotLaunch() {
@@ -75,12 +74,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Serving Calculator", "Second amount: " +String.valueOf(potList.countPots()));
         arrayofpots = potList.getPotDescriptions();
         refresher(arrayofpots);
-        storePotList();
     }
 
     private void setupListView() {
+        potList = loadPotList();
+        arrayofpots = potList.getPotDescriptions();
         refresher(arrayofpots);
-        storePotList();
     }
 
     @Override
@@ -94,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
                     potList.addPot(newPot);
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
-                    storePotList();
                     setupPotClick();
 
                     String PotName = data.getStringExtra("NewPotName");
@@ -112,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
                     potList.changePot(changePot, data.getIntExtra("Index", 1));
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
-                    storePotList();
                 } else {
                     Log.i("Serving Calculator", "Edit Cancelled");
                 }
@@ -152,15 +149,17 @@ public class MainActivity extends AppCompatActivity {
         registerForContextMenu(list);
     }
 
-    private void loadPotList(){
+    private PotCollection loadPotList(){
         SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
         int sizeOfPotList = preferences.getInt(SHAREDPREF_ITEM_POTLIST_SIZE, 0);
         for(int i = 0; i<sizeOfPotList; i++){
-            String potName = preferences.getString(SHAREDPREF_ITEM_POTLIST_NAME, "N");
-            int potWeight = preferences.getInt(SHAREDPREF_ITEM_POTLIST_WEIGHT, 0);
+            Log.i("serving calculator", "once");
+            String potName = preferences.getString(SHAREDPREF_ITEM_POTLIST_NAME+i, "N");
+            int potWeight = preferences.getInt(SHAREDPREF_ITEM_POTLIST_WEIGHT+i, 0);
             Pot tempPot = new Pot(potName, potWeight);
             potList.addPot(tempPot);
         }
+        return potList;
     }
 
     private void storePotList(){
