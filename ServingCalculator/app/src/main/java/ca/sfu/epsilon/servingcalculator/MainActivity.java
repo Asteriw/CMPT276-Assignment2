@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 editEntry(info.position);
                 return true;
             case R.id.delete:
-                Log.i("Serving Calculator", "We are deleting, possibly.");
                 deleteEntry(info.position);
                 return true;
         }
@@ -132,16 +130,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REQUEST_CODE_CHANGEPOT:
                 if (resultCode == Activity.RESULT_OK) {
-                    Log.i("Serving Calculator", "We get here");
                     Pot changePot = AddPot.getPotFromIntent(data);
-                    Log.i("Serving Calculator", "We get here as well");
                     potList.changePot(changePot, data.getIntExtra("Index", 1));
-                    Log.i("Serving Calculator", "We get here too");
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
                 } else {
                     Log.i("Serving Calculator", "Edit Cancelled");
-            }
+                }
+                break;
         }
     }
 }
