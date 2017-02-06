@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -51,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
         refresher(arrayofpots);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.lv_pot_list) {
+            String[] PotMenuOptions = {"Edit", "Delete"};
+            for (int i = 0; i < PotMenuOptions.length; i++) {
+                menu.add(Menu.NONE, i, i, PotMenuOptions[i]);
+            }
+        }
+    }
+
     private void refresher(String[] array) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,                       //Context for activity
@@ -59,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         ListView list = (ListView) findViewById(R.id.lv_pot_list);
         list.setAdapter(adapter);
+        registerForContextMenu(list);
     }
 
     private void setupAddPotLaunch() {
