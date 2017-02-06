@@ -6,27 +6,49 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_LONG;
 
 public class CalculateServing extends AppCompatActivity {
 
+    Pot potToCalculate = new Pot("n", 0);
+    int potWeight;
     int weight;
+    int weightDiffence;
     int servings = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_serving_calculator);
         setupEndActivityButton();
+        extractDataFromIntent();
         setupWeightEditView();
         setupServingsEditView();
         setupTextViews();
     }
 
-    private void setupTextViews() {
+    private void extractDataFromIntent() {
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("PotName");
+        Log.i("Serving Calculator", "Name: " + name);
+        potToCalculate.setName(name);
+        int weight = intent.getIntExtra("PotWeight", 1);
+        Log.i("Serving Calculator", "Weight: " + weight);
+        potToCalculate.setWeightInG(weight);
+    }
 
+    private void setupTextViews() {
+        TextView potName = (TextView) findViewById(R.id.tv_pot_name);
+        potName.setText(potToCalculate.getName());
+        TextView potWeight = (TextView) findViewById(R.id.tv_pot_weight);
+        potWeight.setText("" + potToCalculate.getWeightInG());
     }
 
     private void setupWeightEditView(){
@@ -40,8 +62,10 @@ public class CalculateServing extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int weight = Integer.parseInt(inputWeight.getText().toString());
+                weight = Integer.parseInt(inputWeight.getText().toString());
+                weightDiffence = calculateWeightOfFood(potWeight, weight);
             }
+
         });
     }
 
@@ -56,7 +80,13 @@ public class CalculateServing extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int weight = Integer.parseInt(inputServings.getText().toString());
+                servings = Integer.parseInt(inputServings.getText().toString());
+                if (servings == 0){
+                    servings = 1;
+                    Toast errorServings = Toast.makeText(getApplicationContext(), getString(R.string.error_Servings), LENGTH_LONG);
+                    errorServings.show();
+                }
+                int servingWeight = calculateServing(weightDiffence, servings);
 
             }
         });
@@ -72,7 +102,10 @@ public class CalculateServing extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context, Pot pot) {
-        return new Intent(context, CalculateServing.class);
+        Intent returnIntent = new Intent(context, CalculateServing.class);
+        returnIntent.putExtra("PotName", pot.getName());
+        returnIntent.putExtra("PotWeight", pot.getWeightInG());
+        return returnIntent;
     }
 
     private void setupEndActivityButton(){

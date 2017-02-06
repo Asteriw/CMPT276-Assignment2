@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -81,7 +79,7 @@ public class AddPot extends AppCompatActivity {
     }
 
     public static Pot getPotFromIntent(Intent data) {
-        Pot pot = new Pot(data.getStringExtra("NewPotName"), data.getIntExtra("NewPotWeight", -1));
+        Pot pot = new Pot(data.getStringExtra("NewPotName"), data.getIntExtra("NewPotWeight", 1));
         return pot;
     }
 

@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddPot"></activity>
+        <activity android:name=".CalculateServing"></activity>
     </application>
 
 </manifest>

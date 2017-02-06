@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
                 TextView textView = (TextView) viewClicked;
+                Intent AddCalculateServingIntent = CalculateServing.makeIntent(MainActivity.this, potList.getPot(position));
+                startActivity(AddCalculateServingIntent);
             }
         });
     }
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     potList.addPot(newPot);
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
+                    setupPotClick();
                     
                     String PotName = data.getStringExtra("NewPotName");
                     int PotWeight = data.getIntExtra("NewPotWeight", -1);
@@ -86,16 +89,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    /*
-    private void setupCalculatorLaunch() {
-        Button startAddPot = (Button) findViewById(R.id.); //ADD A VARIABLE HERE
-        startAddPot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent AddCalculateServingIntent = CalculateServing.makeIntent(MainActivity.this);
-                startActivity(AddCalculateServingIntent);
-            }
-        });
-    }*/
 }
