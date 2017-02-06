@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import static ca.sfu.epsilon.servingcalculator.AddPot.getPotFromIntent;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE_NEWPOT = 666;
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             case REQUEST_CODE_NEWPOT:
                 if (resultCode == Activity.RESULT_OK) {
 
-                    Pot newPot = AddPot.getPotFromIntent(data);
+                    Pot newPot = getPotFromIntent(data);
                     potList.addPot(newPot);
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
@@ -106,8 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case REQUEST_CODE_CHANGEPOT:
                 if (resultCode == Activity.RESULT_OK) {
-                    Pot changePot = AddPot.getPotFromIntent(data);
-                    potList.changePot(changePot, data.getIntExtra("Index", 1));
+                    Pot changePot = getPotFromIntent(data);
+                    Log.i("Serving Calculator", ""+data.getIntExtra("Index", 0));
+                    potList.changePot(changePot, data.getIntExtra("Index", 0));
                     arrayofpots = potList.getPotDescriptions();
                     refresher(arrayofpots);
                 } else {

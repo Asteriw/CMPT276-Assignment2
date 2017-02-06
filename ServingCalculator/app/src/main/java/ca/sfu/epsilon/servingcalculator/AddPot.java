@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class AddPot extends AppCompatActivity {
 
-    int weight = -1;
+    int weight = 1;
     String name = "";
 
     @Override
@@ -32,7 +32,7 @@ public class AddPot extends AppCompatActivity {
     private void setupWeightEditText() {
         EditText weightinput = (EditText) findViewById(R.id.Pot_Weight_Field);
         if ((weightinput.getText().toString()).equals("")){
-            weight = -1;
+            weight = 0;
         } else {
             weight = Integer.parseInt(weightinput.getText().toString());
         }
@@ -68,6 +68,12 @@ public class AddPot extends AppCompatActivity {
                     Intent PotReturn = new Intent();
                     PotReturn.putExtra("NewPotName", name);
                     PotReturn.putExtra("NewPotWeight", weight);
+                    Intent intent = getIntent();
+                    if (!intent.equals(null)){
+                        int temp = intent.getIntExtra("Index", 0);//This is to check whether or not an intent is caught.
+                        Log.i("Serving Calculator", ""+temp);
+                        PotReturn.putExtra("Index", temp);
+                    }
                     setResult(Activity.RESULT_OK, PotReturn);
                     finish();
                 } else {
