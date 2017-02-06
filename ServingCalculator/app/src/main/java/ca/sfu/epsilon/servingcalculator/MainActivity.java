@@ -2,6 +2,7 @@ package ca.sfu.epsilon.servingcalculator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +18,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_NEWPOT = 666;
-    public static final int REQUEST_CODE_CHANGEPOT = 111;
+    private static final int REQUEST_CODE_NEWPOT = 666;
+    private static final int REQUEST_CODE_CHANGEPOT = 111;
+    private static final String SHAREDPREF_SET = "ServingCalculator";
+    private static final String SHAREDPREF_ITEM_POTLIST_NAME = "PotName";
+    private static final String SHAREDPREF_ITEM_POTLIST_WEIGHT = "PotWeight";
+    private static final String SHAREDPREF_ITEM_POTLIST_SIZE = "PotListSize";
 
     PotCollection potList = new PotCollection();
 
@@ -32,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
         setupAddPotLaunch();
         setupListView();
         setupPotClick();
+        loadPotList();
+    }
+
+    private void setupAddPotLaunch() {
+        Button startAddPot = (Button) findViewById(R.id.btn_add_pot);
+        startAddPot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent AddPotintent = AddPot.makeIntent(MainActivity.this);
+                startActivityForResult(AddPotintent,  REQUEST_CODE_NEWPOT);
+            }
+        });
     }
 
     private void setupPotClick() {
@@ -58,10 +75,49 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Serving Calculator", "Second amount: " +String.valueOf(potList.countPots()));
         arrayofpots = potList.getPotDescriptions();
         refresher(arrayofpots);
+        storePotList();
     }
 
     private void setupListView() {
         refresher(arrayofpots);
+        storePotList();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case REQUEST_CODE_NEWPOT:
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Pot newPot = AddPot.getPotFromIntent(data);
+                    potList.addPot(newPot);
+                    arrayofpots = potList.getPotDescriptions();
+                    refresher(arrayofpots);
+                    storePotList();
+                    setupPotClick();
+
+                    String PotName = data.getStringExtra("NewPotName");
+                    int PotWeight = data.getIntExtra("NewPotWeight", 1);
+                    Log.i("Serving Calculator", "New Pot's name is: " + PotName);
+                    Log.i("Serving Calculator", "New Pot's weight is: " + String.valueOf(PotWeight));
+                }
+                else {
+                    Log.i("Serving Calculator", "Add Pot Cancelled");
+                }
+                break;
+            case REQUEST_CODE_CHANGEPOT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Pot changePot = AddPot.getPotFromIntent(data);
+                    potList.changePot(changePot, data.getIntExtra("Index", 1));
+                    arrayofpots = potList.getPotDescriptions();
+                    refresher(arrayofpots);
+                    storePotList();
+                } else {
+                    Log.i("Serving Calculator", "Edit Cancelled");
+                }
+                break;
+        }
     }
 
     @Override
@@ -89,55 +145,38 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,                       //Context for activity
                 R.layout.adapter_layout,    //Layout to use
-                array);               //Pots to put in
+                array);                     //Pots to put in
         ListView list = (ListView) findViewById(R.id.lv_pot_list);
         list.setAdapter(adapter);
+        storePotList();
         registerForContextMenu(list);
     }
 
-    private void setupAddPotLaunch() {
-        Button startAddPot = (Button) findViewById(R.id.btn_add_pot);
-        startAddPot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent AddPotintent = AddPot.makeIntent(MainActivity.this);
-                startActivityForResult(AddPotintent,  REQUEST_CODE_NEWPOT);
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case REQUEST_CODE_NEWPOT:
-                if (resultCode == Activity.RESULT_OK) {
-
-                    Pot newPot = AddPot.getPotFromIntent(data);
-                    potList.addPot(newPot);
-                    arrayofpots = potList.getPotDescriptions();
-                    refresher(arrayofpots);
-                    setupPotClick();
-                    
-                    String PotName = data.getStringExtra("NewPotName");
-                    int PotWeight = data.getIntExtra("NewPotWeight", 1);
-                    Log.i("Serving Calculator", "New Pot's name is: " + PotName);
-                    Log.i("Serving Calculator", "New Pot's weight is: " + String.valueOf(PotWeight));
-                }
-                else {
-                    Log.i("Serving Calculator", "Add Pot Cancelled");
-                }
-                break;
-            case REQUEST_CODE_CHANGEPOT:
-                if (resultCode == Activity.RESULT_OK) {
-                    Pot changePot = AddPot.getPotFromIntent(data);
-                    potList.changePot(changePot, data.getIntExtra("Index", 1));
-                    arrayofpots = potList.getPotDescriptions();
-                    refresher(arrayofpots);
-                } else {
-                    Log.i("Serving Calculator", "Edit Cancelled");
-                }
-                break;
+    private void loadPotList(){
+        SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        int sizeOfPotList = preferences.getInt(SHAREDPREF_ITEM_POTLIST_SIZE, 0);
+        for(int i = 0; i<sizeOfPotList; i++){
+            String potName = preferences.getString(SHAREDPREF_ITEM_POTLIST_NAME, "N");
+            int potWeight = preferences.getInt(SHAREDPREF_ITEM_POTLIST_WEIGHT, 0);
+            Pot tempPot = new Pot(potName, potWeight);
+            potList.addPot(tempPot);
         }
     }
+
+    private void storePotList(){
+        String tempName;
+        int tempWeight;
+        SharedPreferences preferences = getSharedPreferences(SHAREDPREF_SET, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        int sizeOfPotList = potList.countPots();
+        editor.putInt(SHAREDPREF_ITEM_POTLIST_SIZE, sizeOfPotList);
+        for(int i = 0; i < potList.countPots();i++){
+            tempWeight = (potList.getPot(i).getWeightInG());
+            tempName = (potList.getPot(i).getName());
+            editor.putString(SHAREDPREF_ITEM_POTLIST_NAME+i, tempName);
+            editor.putInt(SHAREDPREF_ITEM_POTLIST_WEIGHT+i, tempWeight);
+        }
+        editor.commit();
+    }
+
 }

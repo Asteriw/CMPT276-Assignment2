@@ -34,6 +34,11 @@ public class PotCollection {
         return pots.get(index);
     }
 
+    public void savePotList(){
+
+
+    }
+
     // Useful for integrating with an ArrayAdapter
     public String[] getPotDescriptions() {
         String[] descriptions = new String[countPots()];
